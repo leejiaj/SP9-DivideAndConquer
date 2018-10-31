@@ -17,7 +17,7 @@ public class SP9 {
 	    arr[i] = i;
 	}
 	Timer timer = new Timer();
-	switch(2) {
+	switch(choice) {
 	case 1: // Insertion sort
 	    Shuffle.shuffle(arr);
 	    numTrials = 1;
