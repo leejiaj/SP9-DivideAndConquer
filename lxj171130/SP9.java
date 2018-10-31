@@ -17,17 +17,37 @@ public class SP9 {
 	    arr[i] = i;
 	}
 	Timer timer = new Timer();
-	switch(choice) {
-	case 1:
+	switch(2) {
+	case 1: // Insertion sort
 	    Shuffle.shuffle(arr);
 	    numTrials = 1;
 	    insertionSort(arr);
 	    break;
-	case 2:
+	case 2: // Merge sort (take 1)
 	    for(int i=0; i<numTrials; i++) {
 		Shuffle.shuffle(arr);
 		mergeSort1(arr);
 	    }
+	    break;  // etc
+	case 3: // Merge sort (take 2)
+	    for(int i=0; i<numTrials; i++) {
+		Shuffle.shuffle(arr);
+		mergeSort2(arr);
+	    }
+	    for(int x: arr) {
+	    	System.out.print(x + " ");
+	    }
+	    System.out.println();
+	    break;  // etc
+	case 4: // Merge sort (take 3)
+	    for(int i=0; i<numTrials; i++) {
+		Shuffle.shuffle(arr);
+		mergeSort3(arr);
+	    }
+	    for(int x: arr) {
+	    	System.out.print(x + " ");
+	    }
+	    System.out.println();
 	    break;  // etc
 	}
 	timer.end();
@@ -37,9 +57,53 @@ public class SP9 {
     }
 
     public static void insertionSort(int[] arr) {
+    	insertionSort(arr, 0, arr.length-1);
     }
 
-    public static void mergeSort1(int[] arr) {
+    private static void insertionSort(int[] arr, int p, int r) {
+		
+	}
+
+	public static void mergeSort1(int[] arr) {
+    }
+    
+    public static void mergeSort2(int[] arr) {
+    	int[] arrB = new int[arr.length];
+    	mergeSort2(arr, arrB, 0, arr.length);
+    }
+    
+    private static void mergeSort2(int[] arr, int[] arrB, int left, int n) {
+		if(n < 4) {
+			insertionSort(arrB, left, left+n-1);
+		}
+		else {
+			int ln = n / 2;
+			mergeSort2(arr, arrB, left, ln);
+			mergeSort2(arr, arrB, left+ln, n-ln);
+			merge(arr, arrB, left, left+ln-1, left+n-1);
+		}
+	}
+
+	private static void merge(int[] arr, int[] arrB, int p, int q, int r) {
+		// Merge A[p .. q] and A[q + 1 · · · r] into A[p .. r], in sorted order
+		// Use B for temporary storage
+		// Pre: A[p · · · q], and A[q + 1 · · · r] are in sorted order
+		for(int i=p; i<=r; i++) {
+			arrB[i] = arr[i];
+		}
+		int i = p;
+		int j = q + 1;
+		for(int k = p; k<=r; k++) {
+			if(j > r || (i <= q && arrB[i] <= arrB[j])) {
+				arr[k] = arrB[i++];
+			}
+			else {
+				arr[k] = arrB[j++];
+			}
+		}
+	}
+
+	public static void mergeSort3(int[] arr) {
     }
 
 
