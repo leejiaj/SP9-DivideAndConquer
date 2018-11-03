@@ -61,11 +61,45 @@ public class SP9 {
     }
 
     private static void insertionSort(int[] arr, int p, int r) {
-		
+        for (int i=p+1;i<=r;i++) {
+            int tmp = arr[i];
+            int j = i-1;
+            while (j>=p && tmp<arr[j]) {
+                arr[j+1] = arr[j];
+                j--;
+            }
+            arr[j+1] = tmp;
+        }
 	}
 
 	public static void mergeSort1(int[] arr) {
+	    mergeSort1(arr, 0, arr.length-1);
     }
+	
+	public static void mergeSort1(int[] arr, int p, int r) {
+	    if (p<r) {
+	        int q = (p+r)/2;
+	        mergeSort1(arr, p, q);
+	        mergeSort1(arr, q+1, r);
+	        merge1(arr, p, q, r);
+	    }
+	}
+
+	public static void merge1(int[] arr, int p, int q, int r) {
+	    int[] L = new int[q-p+1];
+	    int[] R = new int[r-q];
+	    System.arraycopy(arr, p, L, 0, q-p+1);
+	    System.arraycopy(arr, q+1, R, 0, r-q);
+	    int i = 0;
+	    int j = 0;
+	    for (int k=p; k<=r; k++) {
+	        if (j>=R.length || (i<L.length && L[i]<=R[j])) {
+	            arr[k] = L[i++];
+	        } else {
+	            arr[k] = R[j++];
+	        }
+	    }
+	}
     
     public static void mergeSort2(int[] arr) {
     	int[] arrB = new int[arr.length];
