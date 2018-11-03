@@ -28,32 +28,28 @@ public class SP9 {
 		Shuffle.shuffle(arr);
 		mergeSort1(arr);
 	    }
-	    break;  // etc
+	    break;
 	case 3: // Merge sort (take 2)
 	    for(int i=0; i<numTrials; i++) {
 		Shuffle.shuffle(arr);
 		mergeSort2(arr);
 	    }
-	    for(int x: arr) {
-	    	System.out.print(x + " ");
-	    }
-	    System.out.println();
-	    break;  // etc
+	    break;
 	case 4: // Merge sort (take 3)
 	    for(int i=0; i<numTrials; i++) {
 		Shuffle.shuffle(arr);
 		mergeSort3(arr);
 	    }
-	    for(int x: arr) {
-	    	System.out.print(x + " ");
-	    }
-	    System.out.println();
-	    break;  // etc
+	    break;
 	}
 	timer.end();
 	timer.scale(numTrials);
 
 	System.out.println("Choice: " + choice + "\n" + timer);
+    for(int i=0; i<=arr.length-1; i++) {
+        System.out.print(arr[i] + " ");
+    }
+    System.out.println();
     }
 
     public static void insertionSort(int[] arr) {
@@ -108,23 +104,21 @@ public class SP9 {
     
     private static void mergeSort2(int[] arr, int[] arrB, int left, int n) {
 		if(n < 4) {
-			insertionSort(arrB, left, left+n-1);
+			insertionSort(arr, left, left+n-1);
 		}
 		else {
-			int ln = n / 2;
-			mergeSort2(arr, arrB, left, ln);
-			mergeSort2(arr, arrB, left+ln, n-ln);
-			merge(arr, arrB, left, left+ln-1, left+n-1);
+			int Ln = n / 2;
+			mergeSort2(arr, arrB, left, Ln);
+			mergeSort2(arr, arrB, left+Ln, n-Ln);
+			merge2(arr, arrB, left, left+Ln-1, left+n-1);
 		}
 	}
 
-	private static void merge(int[] arr, int[] arrB, int p, int q, int r) {
-		// Merge A[p .. q] and A[q + 1 · · · r] into A[p .. r], in sorted order
-		// Use B for temporary storage
-		// Pre: A[p · · · q], and A[q + 1 · · · r] are in sorted order
-		for(int i=p; i<=r; i++) {
-			arrB[i] = arr[i];
-		}
+	private static void merge2(int[] arr, int[] arrB, int p, int q, int r) {
+		// Merge arr[p .. q] and arr[q + 1 ... r] into arr[p .. r], in sorted order
+		// Use arrB for temporary storage
+		// Pre: arr[p ... q], and arr[q + 1 ... r] are in sorted order
+		System.arraycopy(arr, p, arrB, p, r-p+1);
 		int i = p;
 		int j = q + 1;
 		for(int k = p; k<=r; k++) {
@@ -138,10 +132,52 @@ public class SP9 {
 	}
 
 	public static void mergeSort3(int[] arr) {
+		int[] arrB = new int[arr.length];
+		System.arraycopy(arr, 0, arrB, 0, arr.length);
+		mergeSort3(arr, arrB, 0, arr.length);
     }
 
 
-   /** Timer class for roughly calculating running time of programs
+    private static void mergeSort3(int[] arr, int[] arrB, int left, int n) {
+		//Sort arr[left..left+n-1] or arrB[left .. left+n-1]
+		// into arr[left .. left+n-1]
+		//Pre: arr[left .. left+n-1], arrB[left .. left+n-1]
+		// have the same elements
+		if(n < 4) {
+			insertionSort(arr, left, left+n-1);
+		}
+		else {
+			int Ln = n / 2;
+			// sort into arrB and merge into arr
+			mergeSort3(arrB, arr, left, Ln);
+			mergeSort3(arrB, arr, left+Ln, n-Ln);
+			merge3(arr, arrB, left, left+Ln-1, left+n-1);
+		}
+	}
+
+
+    private static void merge3(int[] arr, int[] arrB, int p, int q, int r) {
+		//Merge arrB[p .. q] and arrB[q + 1 .. r] into arr[p .. r], in sorted order
+		//Pre: arrB[p .. q], and arrB[q + 1 .. r] are in sorted order
+		int i = p, j = q + 1, k = p;
+		while(i <= q && j <= r) {
+			if(arrB[ i ] <= arrB[ j ]) {
+				arr[k++] = arrB[i++];
+			}
+			else {
+				arr[k++] = arrB[j++];
+			}
+		}
+		while(i <= q) {
+			arr[k++] = arrB[i++];
+		}
+		while(j <= r) {
+			arr[k++] = arrB[j++];
+		}
+	}
+
+
+/** Timer class for roughly calculating running time of programs
      *  @author rbk
      *  Usage:  Timer timer = new Timer();
      *          timer.start();
