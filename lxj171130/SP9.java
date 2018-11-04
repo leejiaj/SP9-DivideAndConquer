@@ -1,5 +1,16 @@
-/** Sample starter code for SP9.
- *  @author
+/**
+ * @author Leejia James
+ * @author Nirbhay Sibal
+ *
+ * Divide and conquer algorithms
+ * Implemented and compared the running times of the following algorithms
+ * on randomly generated arrays: 
+ * (a) Insertion sort
+ * (b) Merge sort (take 1)
+ * (c) Merge sort (take 2)
+ * (d) Merge sort (take 3)
+ *
+ * Ver 1.0: 2018/11/3
  */
 
 package lxj171130;
@@ -9,7 +20,7 @@ public class SP9 {
     public static Random random = new Random();
     public static int numTrials = 100;
     public static void main(String[] args) {
-	int n = 10;  int choice = 1 + random.nextInt(4);
+	int n = 100;  int choice = 1 + random.nextInt(4);
 	if(args.length > 0) { n = Integer.parseInt(args[0]); }
 	if(args.length > 1) { choice = Integer.parseInt(args[1]); }
         int[] arr = new int[n];
@@ -46,16 +57,22 @@ public class SP9 {
 	timer.scale(numTrials);
 
 	System.out.println("Choice: " + choice + "\n" + timer);
-    for(int i=0; i<=arr.length-1; i++) {
-        System.out.print(arr[i] + " ");
-    }
-    System.out.println();
     }
 
+    /**
+     * Sorting the input array using Insertion Sort
+     * @param arr
+     */
     public static void insertionSort(int[] arr) {
     	insertionSort(arr, 0, arr.length-1);
     }
 
+    /**
+     * Helper method for sorting array using Insertion Sort
+     * @param arr
+     * @param p
+     * @param r
+     */
     private static void insertionSort(int[] arr, int p, int r) {
         for (int i=p+1;i<=r;i++) {
             int tmp = arr[i];
@@ -68,10 +85,21 @@ public class SP9 {
         }
 	}
 
+    /**
+     * Sorting the input array using MergeSort as described in text books
+     * Mergesort (take 1)
+     * @param arr
+     */
 	public static void mergeSort1(int[] arr) {
 	    mergeSort1(arr, 0, arr.length-1);
     }
 	
+	/**
+	 * Recursive merge sort method to implement the sorting in Mergesort (take 1)
+	 * @param arr
+	 * @param p
+	 * @param r
+	 */
 	public static void mergeSort1(int[] arr, int p, int r) {
 	    if (p<r) {
 	        int q = (p+r)/2;
@@ -81,6 +109,13 @@ public class SP9 {
 	    }
 	}
 
+	/**
+	 * Merge method for Merge sort (take 1)
+	 * @param arr
+	 * @param p
+	 * @param q
+	 * @param r
+	 */
 	public static void merge1(int[] arr, int p, int q, int r) {
 	    int[] L = new int[q-p+1];
 	    int[] R = new int[r-q];
@@ -97,11 +132,26 @@ public class SP9 {
 	    }
 	}
     
+	/**
+	 * Sorting the input array using MergeSort
+	 * Mergesort (take 2)
+	 * Compared to take 1, improvements:
+	 * 1. Does not allocate L/R each time in merge
+	 * 2. Stops recursion below a threshold
+	 * @param arr
+	 */
     public static void mergeSort2(int[] arr) {
     	int[] arrB = new int[arr.length];
     	mergeSort2(arr, arrB, 0, arr.length);
     }
     
+    /**
+     * Recursive merge sort method to implement the sorting in Mergesort (take 2)
+     * @param arr
+     * @param arrB
+     * @param left
+     * @param n
+     */
     private static void mergeSort2(int[] arr, int[] arrB, int left, int n) {
 		if(n < 4) {
 			insertionSort(arr, left, left+n-1);
@@ -114,6 +164,14 @@ public class SP9 {
 		}
 	}
 
+    /**
+     * Merge method for Merge sort (take 2)
+     * @param arr
+     * @param arrB
+     * @param p
+     * @param q
+     * @param r
+     */
 	private static void merge2(int[] arr, int[] arrB, int p, int q, int r) {
 		// Merge arr[p .. q] and arr[q + 1 ... r] into arr[p .. r], in sorted order
 		// Use arrB for temporary storage
@@ -131,6 +189,14 @@ public class SP9 {
 		}
 	}
 
+	/**
+	 * Sorting the input array using MergeSort
+	 * Mergesort (take 3)
+	 * Compared to take 2, improvements:
+	 * 1. Avoid unnecessary copying from A to B in merge
+	 * 2. Change for loop to while loop (applicable only in Java)
+	 * @param arr
+	 */
 	public static void mergeSort3(int[] arr) {
 		int[] arrB = new int[arr.length];
 		System.arraycopy(arr, 0, arrB, 0, arr.length);
@@ -138,6 +204,13 @@ public class SP9 {
     }
 
 
+	/**
+	 * Recursive merge sort method to implement the sorting in Mergesort (take 3)
+	 * @param arr
+	 * @param arrB
+	 * @param left
+	 * @param n
+	 */
     private static void mergeSort3(int[] arr, int[] arrB, int left, int n) {
 		//Sort arr[left..left+n-1] or arrB[left .. left+n-1]
 		// into arr[left .. left+n-1]
@@ -156,6 +229,14 @@ public class SP9 {
 	}
 
 
+    /**
+     * Merge method for Merge sort (take 3)
+     * @param arr
+     * @param arrB
+     * @param p
+     * @param q
+     * @param r
+     */
     private static void merge3(int[] arr, int[] arrB, int p, int q, int r) {
 		//Merge arrB[p .. q] and arrB[q + 1 .. r] into arr[p .. r], in sorted order
 		//Pre: arrB[p .. q], and arrB[q + 1 .. r] are in sorted order

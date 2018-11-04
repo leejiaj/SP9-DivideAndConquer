@@ -1,0 +1,40 @@
+CS 5V81 SP 9: Divide and conquer algorithms
+Leejia James and Nirbhay Sibal
+
+Team task: 
+Comparison of Running Times of Algorithms
+
+*******************************************************************************************************
+Algorithm 								n (M)								Running Time (s)
+*******************************************************************************************************
+Insertion Sort							0.8									173
+Insertion Sort							8									infinity
+-------------------------------------------------------------------------------------------------------
+Merge Sort (take 1)						8									1.7
+Merge Sort (take 1)						16									3.57
+Merge Sort (take 1)						32									7.75
+Merge Sort (take 1)						64									15.62
+Merge Sort (take 1)						128									31.75
+Merge Sort (take 1)						256									69.78
+Merge Sort (take 1)						512									out of memory exception
+-------------------------------------------------------------------------------------------------------
+Merge Sort (take 2)						8									1.16
+Merge Sort (take 2)						16									2.568
+Merge Sort (take 2)						32									5.754
+Merge Sort (take 2)						64									11.633
+Merge Sort (take 2)						128									25.225
+Merge Sort (take 2)						256									55.196
+Merge Sort (take 2)						512									out of memory exception
+-------------------------------------------------------------------------------------------------------
+Merge Sort (take 3)						8									1.165
+Merge Sort (take 3)						16									2.531
+Merge Sort (take 3)						32									5.411
+Merge Sort (take 3)						64									11.44
+Merge Sort (take 3)						128									25.362
+Merge Sort (take 3)						256									52.96
+Merge Sort (take 3)						512									out of memory exception
+-------------------------------------------------------------------------------------------------------
+
+The results clearly favor Merge Sort over Insertion Sort for all larger inputs considered. 
+Merge Sort (take 2) and (take 3) are clearly better than Merge Sort (take 1).
+Merge Sort (take 2) and (take 3) have almost similar RTs, still (take 3) has better performance than (take 2), we should say.
